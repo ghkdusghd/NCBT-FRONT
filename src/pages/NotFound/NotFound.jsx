@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import AuthModal from "../../components/Modal/AuthModal";
 
 const NotFound = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
-
   const navigate = useNavigate();
+  const { name } = useParams();
+  const token = sessionStorage.getItem("accessToken");
 
   const handleOpenModal = () => {
     setShowAuthModal(true);
@@ -16,6 +17,12 @@ const NotFound = () => {
   const handleCloseModal = () => {
     setShowAuthModal(false);
   };
+
+  useEffect(() => {
+    if (token) {
+      navigate(`/${name}/exam`);
+    }
+  }, [token]);
 
   return (
     <WhoAreYou>
