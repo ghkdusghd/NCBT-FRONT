@@ -215,7 +215,6 @@ const Exam = () => {
       );
       navigate(`/${subjectName}`);
     }
-    console.log("점수?", count);
     recordScore();
   };
 
