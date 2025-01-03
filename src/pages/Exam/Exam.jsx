@@ -37,6 +37,13 @@ const Exam = () => {
     return numbers[num - 1] || num;
   };
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [currentIndex]);
+
   // 로그인하지 않은 사용자는 NotFound 페이지로 보내고, 로그인한 사용자에게는 ExamWait 컴포넌트를 띄움.
   const token = sessionStorage.getItem("accessToken");
   useEffect(() => {
@@ -401,11 +408,11 @@ const Exam = () => {
               )}
             </TabletExamFoot>
           </TabletExamContainer>
-          <TabletAnswerContainer>
+          <MobileAnswerContainer>
             <div>
               <button onClick={() => setModal(true)}>제출하기</button>
             </div>
-          </TabletAnswerContainer>
+          </MobileAnswerContainer>
           <AdContainer>
             <div></div>
           </AdContainer>
@@ -561,16 +568,17 @@ const TabletExamFoot = styled.div`
 `;
 
 const TabletAnswerContainer = styled.div`
-  margin-top: 1rem;
+  margin-top: 2rem;
   display: flex;
   gap: 1rem;
-  justify-content: center;
+  justify-content: flex-end;
   justify-items: center;
 
   button {
-    width: 7rem;
+    width: 8rem;
     color: white;
-    padding: 0.5rem;
+    background-color: orange;
+    padding: 0.8rem;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -587,6 +595,24 @@ const MobileContainer = styled.div`
 
 const MobileExamHead = styled.div`
   margin-bottom: 1rem;
+`;
+
+const MobileAnswerContainer = styled.div`
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  justify-items: center;
+
+  button {
+    width: 8rem;
+    color: white;
+    background-color: orange;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
 `;
 
 export default Exam;
