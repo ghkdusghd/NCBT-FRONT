@@ -34,6 +34,11 @@ const Practice = () => {
     });
 
     AOS.refresh();
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }, [currentIdx]);
 
   const questionId = randomIds[currentIdx];
@@ -383,7 +388,7 @@ const PracticeBody = styled.div`
 
 const ProblemBox = styled.div`
   width: 50%;
-  min-width: 30rem;
+  min-width: 24rem;
   min-height: 36vh;
   max-height: auto;
   padding: 2rem;
@@ -487,7 +492,7 @@ const ButtonContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 50%;
-  min-width: 30rem;
+  min-width: 24rem;
 `;
 
 const PrevButton = styled.button`
