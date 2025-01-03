@@ -34,6 +34,11 @@ const Practice = () => {
     });
 
     AOS.refresh();
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }, [currentIdx]);
 
   const questionId = randomIds[currentIdx];

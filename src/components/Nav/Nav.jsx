@@ -62,7 +62,6 @@ const Nav = ({ nick }) => {
           response.headers.get("Set-Cookie");
 
           setIsToken(true);
-          window.location.reload();
         }
       }
 
@@ -85,7 +84,7 @@ const Nav = ({ nick }) => {
 
     if (token) {
       setIsToken(true);
-    } else if (!token && nick) {
+    } else if (!token && !nick) {
       handleUpdateToken();
     }
 

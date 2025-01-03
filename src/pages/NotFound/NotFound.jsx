@@ -6,6 +6,7 @@ import AuthModal from "../../components/Modal/AuthModal";
 const NotFound = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
+
   const navigate = useNavigate();
   const { name } = useParams();
   const token = sessionStorage.getItem("accessToken");

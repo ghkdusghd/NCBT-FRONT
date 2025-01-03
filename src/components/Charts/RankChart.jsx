@@ -123,6 +123,7 @@ const MobileBox = styled.div`
   flex-direction: column;
   align-items: center;
   margin: 6rem 0;
+  height: 200px;
 `;
 
 const ChartBox = styled.div`
