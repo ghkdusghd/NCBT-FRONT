@@ -232,7 +232,7 @@ const Main = () => {
 export default Main;
 
 const MainContainer = styled.div`
-  min-height: 77vh;
+  /* min-height: 77vh; */
 `;
 
 const SlideContainer = styled.div`

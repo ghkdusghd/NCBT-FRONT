@@ -53,7 +53,7 @@ export default Footer;
 
 const FooterBody = styled.div`
   width: 100%;
-  min-width: 28rem;
+  /* min-width: 28rem; */
   height: auto;
   padding: 1rem;
   background-color: #f3f4f8;

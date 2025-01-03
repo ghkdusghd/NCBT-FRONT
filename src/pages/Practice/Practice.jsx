@@ -383,8 +383,8 @@ const PracticeBody = styled.div`
 
 const ProblemBox = styled.div`
   width: 50%;
-  min-width: 30rem;
-  min-height: 36vh;
+  min-width: 20rem;
+  /* min-height: 36vh; */
   max-height: auto;
   padding: 2rem;
   margin: 2rem 0;
@@ -487,7 +487,7 @@ const ButtonContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 50%;
-  min-width: 30rem;
+  min-width: 22rem;
 `;
 
 const PrevButton = styled.button`
