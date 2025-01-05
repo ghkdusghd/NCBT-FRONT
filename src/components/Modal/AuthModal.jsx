@@ -196,6 +196,7 @@ const AuthModal = ({ type, closeModal }) => {
         `${process.env.REACT_APP_BASE_URL}/form/email-code?email=${encodeURIComponent(email)}`,
         {
           method: "GET",
+          credentials: "include",
         },
       );
 
