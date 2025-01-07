@@ -19,6 +19,7 @@ import Admin from "./pages/Admin/Admin";
 import Sponsor from "./components/Ads/Sponsor";
 import SponsorSuccess from "./components/Ads/SponsorSuccess";
 import SponsorFail from "./components/Ads/SponsorFail";
+import Bookmarks from "./pages/User/Bookmarks";
 
 const Router = () => {
   const [username, setUsername] = useState("");
@@ -86,6 +87,10 @@ const Router = () => {
           <Route
             path="/:name/who-are-you"
             element={<PageWrapper username={username} Component={NotFound} />}
+          />
+          <Route
+            path="/:username/bookmarks"
+            element={<PageWrapper Component={Bookmarks} />}
           />
           <Route
             path="/quiz"

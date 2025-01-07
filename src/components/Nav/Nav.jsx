@@ -182,7 +182,11 @@ const Nav = ({ nick }) => {
                 </Username>
                 {isProfileOpen && (
                   <ProfileMenu>
-                    {/* <UserProfile>내 정보</UserProfile> 나중에 추가작업시*/}
+                    <UserProfile
+                      onClick={() => navigate(`/${username}/bookmarks`)}
+                    >
+                      북마크
+                    </UserProfile>
                     <LogoutButton onClick={logout}>로그아웃</LogoutButton>
                   </ProfileMenu>
                 )}
@@ -217,7 +221,11 @@ const Nav = ({ nick }) => {
                 </Username>
                 {isProfileOpen && (
                   <MobileList>
-                    {/* <UserProfile>내 정보</UserProfile> */}
+                    <UserProfile
+                      onClick={() => navigate(`/${username}/bookmarks`)}
+                    >
+                      북마크
+                    </UserProfile>
                     <MobileLogout onClick={logout}>로그아웃</MobileLogout>
                   </MobileList>
                 )}
