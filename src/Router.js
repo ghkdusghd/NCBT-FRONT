@@ -19,6 +19,7 @@ import Admin from "./pages/Admin/Admin";
 import Sponsor from "./components/Ads/Sponsor";
 import SponsorSuccess from "./components/Ads/SponsorSuccess";
 import SponsorFail from "./components/Ads/SponsorFail";
+import Bookmarks from "./pages/User/Bookmarks";
 
 const Router = () => {
   const [username, setUsername] = useState("");
@@ -28,8 +29,17 @@ const Router = () => {
   useEffect(() => {
     if (token) {
       const payload = token.split(".")[1];
-      const decodedPayload = JSON.parse(atob(payload));
-      setUsername(decodedPayload.sub);
+      const base64Url = payload.replace(/-/g, "+").replace(/_/g, "/");
+      const decodedPayload = atob(base64Url);
+      const decodedText = new TextDecoder("utf-8").decode(
+        Uint8Array.from(decodedPayload, c => c.charCodeAt(0)),
+      );
+      const decodedUsername = decodeURIComponent(decodedText);
+      const parsedPayload = JSON.parse(decodedUsername);
+      setUsername(parsedPayload.sub);
+
+      // const decodedPayload = JSON.parse(atob(payload));
+      // setUsername(decodedPayload.sub);
 
       // 관리자 여부 확인
       const role = decodedPayload.auth;
@@ -86,6 +96,10 @@ const Router = () => {
           <Route
             path="/:name/who-are-you"
             element={<PageWrapper username={username} Component={NotFound} />}
+          />
+          <Route
+            path="/:username/bookmarks"
+            element={<PageWrapper Component={Bookmarks} />}
           />
           <Route
             path="/quiz"

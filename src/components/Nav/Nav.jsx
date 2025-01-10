@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import AuthModal from "../Modal/AuthModal";
 import { useNavigate, useParams } from "react-router-dom";
@@ -153,6 +153,27 @@ const Nav = ({ nick }) => {
     };
   }, []);
 
+  // ProfileMenu 외부 클릭 시 닫기
+  const profileMenuRef = useRef(null);
+  const profileIconRef = useRef(null);
+  useEffect(() => {
+    const handleClickOutside = event => {
+      if (
+        profileMenuRef.current &&
+        !profileMenuRef.current.contains(event.target) &&
+        !profileIconRef.current.contains(event.target)
+      ) {
+        setIsProfileOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
     <NavBody>
       <NavLogo
@@ -174,15 +195,20 @@ const Nav = ({ nick }) => {
             ) : (
               <>
                 <ProfileIcon
+                  ref={profileIconRef}
                   className="bi bi-person-circle"
                   onClick={openProfile}
                 ></ProfileIcon>
                 <Username onClick={openProfile}>
-                  <b>{nick}</b>
+                  <b>{username}</b>
                 </Username>
                 {isProfileOpen && (
-                  <ProfileMenu>
-                    {/* <UserProfile>내 정보</UserProfile> 나중에 추가작업시*/}
+                  <ProfileMenu ref={profileMenuRef}>
+                    <UserProfile
+                      onClick={() => navigate(`/${username}/bookmarks`)}
+                    >
+                      북마크
+                    </UserProfile>
                     <LogoutButton onClick={logout}>로그아웃</LogoutButton>
                   </ProfileMenu>
                 )}
@@ -209,15 +235,20 @@ const Nav = ({ nick }) => {
             ) : (
               <>
                 <ProfileIcon
+                  ref={profileIconRef}
                   className="bi bi-person-circle"
                   onClick={openProfile}
                 />
                 <Username onClick={openProfile}>
-                  <b>{nick}</b>
+                  <b>{username}</b>
                 </Username>
                 {isProfileOpen && (
-                  <MobileList>
-                    {/* <UserProfile>내 정보</UserProfile> */}
+                  <MobileList ref={profileMenuRef}>
+                    <UserProfile
+                      onClick={() => navigate(`/${username}/bookmarks`)}
+                    >
+                      북마크
+                    </UserProfile>
                     <MobileLogout onClick={logout}>로그아웃</MobileLogout>
                   </MobileList>
                 )}

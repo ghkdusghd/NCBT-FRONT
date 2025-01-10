@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { flexRowBox } from "../../styles/Variables";
@@ -274,9 +274,25 @@ const AuthModal = ({ type, closeModal }) => {
       "&scope=user:email";
   };
 
+  // 모달 외부 클릭 시 닫히는 기능
+  const modalRef = useRef();
+  const handleClickOutside = e => {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
+      closeModal();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <AuthModalContainer>
-      <AuthModalContent>
+      <AuthModalContent ref={modalRef}>
         <span className="closeAuthModalButton" onClick={closeModal}>
           X
         </span>
@@ -322,7 +338,15 @@ const AuthModal = ({ type, closeModal }) => {
                 <img src="/images/github.png" alt="github-icon" />
                 <span> GitHub Login</span>
               </GithubLogin>
-              <NaverLogin type="button" onClick={() => doNaverLogin()}>
+              <NaverLogin
+                type="button"
+                // onClick={() => doNaverLogin()}
+                onClick={() =>
+                  alert(
+                    "현재 검수 단계 입니다. 검수 완료 후 이용하실 수 있습니다.",
+                  )
+                }
+              >
                 <span style={{ fontSize: "1.5rem", marginRight: "0.5rem" }}>
                   N
                 </span>

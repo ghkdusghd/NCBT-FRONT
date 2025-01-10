@@ -47,7 +47,7 @@ const Main = () => {
 
     if (response.status === 401) {
       navigate("/");
-      alert("이미 등록된 이메일입니다.");
+      alert("이미 등록된 이메일입니다. 일반 로그인을 이용해주세요.");
     }
 
     if (response.status === 200) {
@@ -86,7 +86,7 @@ const Main = () => {
 
     if (response.status === 401) {
       navigate("/");
-      alert("이미 등록된 이메일입니다.");
+      alert("이미 등록된 이메일입니다. 일반 로그인을 이용해주세요.");
     }
 
     if (response.status === 200) {

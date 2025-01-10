@@ -39,7 +39,8 @@ const Footer = () => {
             </button>
             <button
               className="mini-sponsor-button"
-              onClick={() => navigate("/sponsor")}
+              // onClick={() => navigate("/sponsor")}
+              onClick={() => alert("현재 테스트 단계입니다.")}
             >
               ☕️
             </button>

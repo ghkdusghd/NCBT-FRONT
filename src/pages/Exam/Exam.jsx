@@ -227,7 +227,7 @@ const Exam = () => {
 
   const recordScore = () => {
     axiosConfig
-      .post(`/exam/record`, { count: count, subjectId: subjectId })
+      .post(`/exam/record`, { score: count, subjectId: subjectId })
       .then(res => {
         console.log(res.data);
       })
