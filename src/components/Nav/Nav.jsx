@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import AuthModal from "../Modal/AuthModal";
 import { useNavigate, useParams } from "react-router-dom";
@@ -153,6 +153,27 @@ const Nav = ({ nick }) => {
     };
   }, []);
 
+  // ProfileMenu 외부 클릭 시 닫기
+  const profileMenuRef = useRef(null);
+  const profileIconRef = useRef(null);
+  useEffect(() => {
+    const handleClickOutside = event => {
+      if (
+        profileMenuRef.current &&
+        !profileMenuRef.current.contains(event.target) &&
+        !profileIconRef.current.contains(event.target)
+      ) {
+        setIsProfileOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
     <NavBody>
       <NavLogo
@@ -174,6 +195,7 @@ const Nav = ({ nick }) => {
             ) : (
               <>
                 <ProfileIcon
+                  ref={profileIconRef}
                   className="bi bi-person-circle"
                   onClick={openProfile}
                 ></ProfileIcon>
@@ -181,7 +203,7 @@ const Nav = ({ nick }) => {
                   <b>{username}</b>
                 </Username>
                 {isProfileOpen && (
-                  <ProfileMenu>
+                  <ProfileMenu ref={profileMenuRef}>
                     <UserProfile
                       onClick={() => navigate(`/${username}/bookmarks`)}
                     >
@@ -213,6 +235,7 @@ const Nav = ({ nick }) => {
             ) : (
               <>
                 <ProfileIcon
+                  ref={profileIconRef}
                   className="bi bi-person-circle"
                   onClick={openProfile}
                 />
@@ -220,7 +243,7 @@ const Nav = ({ nick }) => {
                   <b>{username}</b>
                 </Username>
                 {isProfileOpen && (
-                  <MobileList>
+                  <MobileList ref={profileMenuRef}>
                     <UserProfile
                       onClick={() => navigate(`/${username}/bookmarks`)}
                     >

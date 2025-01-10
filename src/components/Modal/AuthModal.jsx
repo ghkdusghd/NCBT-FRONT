@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { flexRowBox } from "../../styles/Variables";
@@ -274,9 +274,25 @@ const AuthModal = ({ type, closeModal }) => {
       "&scope=user:email";
   };
 
+  // 모달 외부 클릭 시 닫히는 기능
+  const modalRef = useRef();
+  const handleClickOutside = e => {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
+      closeModal();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <AuthModalContainer>
-      <AuthModalContent>
+      <AuthModalContent ref={modalRef}>
         <span className="closeAuthModalButton" onClick={closeModal}>
           X
         </span>
