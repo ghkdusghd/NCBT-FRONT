@@ -178,7 +178,7 @@ const Nav = ({ nick }) => {
                   onClick={openProfile}
                 ></ProfileIcon>
                 <Username onClick={openProfile}>
-                  <b>{nick}</b>
+                  <b>{username}</b>
                 </Username>
                 {isProfileOpen && (
                   <ProfileMenu>
@@ -217,7 +217,7 @@ const Nav = ({ nick }) => {
                   onClick={openProfile}
                 />
                 <Username onClick={openProfile}>
-                  <b>{nick}</b>
+                  <b>{username}</b>
                 </Username>
                 {isProfileOpen && (
                   <MobileList>
