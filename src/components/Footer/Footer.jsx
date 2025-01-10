@@ -63,6 +63,7 @@ const FooterBody = styled.div`
   display: flex;
   justify-content: space-between;
   bottom: 0;
+  position: fixed;
 
   .introduce-box {
     text-align: start;
