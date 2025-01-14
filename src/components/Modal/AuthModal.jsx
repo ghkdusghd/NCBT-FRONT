@@ -338,15 +338,7 @@ const AuthModal = ({ type, closeModal }) => {
                 <img src="/images/github.png" alt="github-icon" />
                 <span> GitHub Login</span>
               </GithubLogin>
-              <NaverLogin
-                type="button"
-                // onClick={() => doNaverLogin()}
-                onClick={() =>
-                  alert(
-                    "현재 검수 단계 입니다. 검수 완료 후 이용하실 수 있습니다.",
-                  )
-                }
-              >
+              <NaverLogin type="button" onClick={() => doNaverLogin()}>
                 <span style={{ fontSize: "1.5rem", marginRight: "0.5rem" }}>
                   N
                 </span>
