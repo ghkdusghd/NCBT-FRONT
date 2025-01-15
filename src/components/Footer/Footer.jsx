@@ -63,10 +63,11 @@ const FooterBody = styled.div`
   padding: 2.4rem;
   display: flex;
   justify-content: space-between;
+
   /* position: ${props => (props.isFixedStyle ? "fixed" : "relative")}; */
-  bottom: ${props => (props.isFixedStyle ? "0" : "auto")};
-  left: ${props => (props.isFixedStyle ? "0" : "auto")};
-  margin-top: auto;
+  /* bottom: ${props => (props.isFixedStyle ? "0" : "auto")}; */
+  /* left: ${props => (props.isFixedStyle ? "0" : "auto")}; */
+  /* margin-top: auto; */
 
   .introduce-box {
     text-align: start;

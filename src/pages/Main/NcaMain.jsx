@@ -103,6 +103,8 @@ const MobileContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin: 3rem 0;
+  /* 임시 사이즈 */
+  min-height: 36vh;
 
   .button-box {
     min-width: 40rem;

@@ -49,6 +49,7 @@ const GlobalStyle = createGlobalStyle`
     margin-bottom: 2rem;
   }
 
+
 `;
 
 export default GlobalStyle;
