@@ -247,7 +247,7 @@ const MobileContainer = styled.div`
   margin: 5rem 0;
 
   .subject-button-box {
-    min-width: 40rem;
+    min-width: 24rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -279,5 +279,9 @@ const DesktopContainer = styled.div`
     width: 15rem;
     background-color: #02c95f;
     font-size: 3rem;
+  }
+
+  .slick-arrow.slick-next {
+    display: none !important;
   }
 `;
