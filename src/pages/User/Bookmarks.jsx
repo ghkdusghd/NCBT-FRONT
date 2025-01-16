@@ -69,44 +69,44 @@ const Bookmarks = () => {
 
   return (
     <>
-      {isDesktop && (
-        <DesktopContainer>
-          <DesktopBookmark>
-            <h2 className="bookmark-title-list">북마크한 문제</h2>
-            {subjects.map(el => (
-              <button
-                className="subject-btn"
-                key={el}
-                onClick={() => handleSubjectClick(el)}
-              >
-                {el}
-              </button>
-            ))}
-          </DesktopBookmark>
-          <DesktopDescriptions>
-            {questionData.map((el, idx) => (
-              <DesktopQuestions key={el.id}>
-                <h3>
-                  {idx + 1}. {el.question}
-                </h3>
-                <ul className="exmale-box">
-                  {el.example.map((example, idx) => (
-                    <li key={example.num}>
-                      {idx + 1}.&nbsp;{example.text}
-                    </li>
-                  ))}
-                </ul>
-                <p>
-                  <strong>정답:</strong> {el.answer}
-                </p>
-                <p>
-                  <strong>설명:</strong> {el.explanation}
-                </p>
-              </DesktopQuestions>
-            ))}
-          </DesktopDescriptions>
-        </DesktopContainer>
-      )}
+      {/* {isDesktop && ( */}
+      <DesktopContainer>
+        <DesktopBookmark>
+          <h2 className="bookmark-title-list">북마크한 문제</h2>
+          {subjects.map(el => (
+            <button
+              className="subject-btn"
+              key={el}
+              onClick={() => handleSubjectClick(el)}
+            >
+              {el}
+            </button>
+          ))}
+        </DesktopBookmark>
+        <DesktopDescriptions>
+          {questionData.map((el, idx) => (
+            <DesktopQuestions key={el.id}>
+              <h3>
+                {idx + 1}. {el.question}
+              </h3>
+              <ul className="exmale-box">
+                {el.example.map((example, idx) => (
+                  <li key={example.num}>
+                    {idx + 1}.&nbsp;{example.text}
+                  </li>
+                ))}
+              </ul>
+              <p>
+                <strong>정답:</strong> {el.answer}
+              </p>
+              <p>
+                <strong>설명:</strong> {el.explanation}
+              </p>
+            </DesktopQuestions>
+          ))}
+        </DesktopDescriptions>
+      </DesktopContainer>
+      {/* )} */}
     </>
   );
 };
