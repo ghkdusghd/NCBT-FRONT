@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 const Bookmarks = () => {
   const subjects = ["NCA", "NCP200", "NCP202", "NCP207"];
-  const [selectedSubject, setSelectedSubject] = useState("NCA");
+  const [selectedSubject, setSelectedSubject] = useState();
   const [bookmarkList, setBookmarkList] = useState([]);
   const [questionData, setQuestionData] = useState([]);
   const navigate = useNavigate();
@@ -14,10 +14,12 @@ const Bookmarks = () => {
 
   // 서버에서 유저의 북마크 정보 가져오기
   useEffect(() => {
-    getBookmarks();
+    if (selectedSubject === undefined) {
+      console.log(selectedSubject);
+    } else {
+      getBookmarks();
+    }
   }, [selectedSubject]);
-
-  console.log(selectedSubject);
 
   const getBookmarks = async () => {
     try {

@@ -156,12 +156,14 @@ const Nav = ({ nick }) => {
   // ProfileMenu 외부 클릭 시 닫기
   const profileMenuRef = useRef(null);
   const profileIconRef = useRef(null);
+  const profileTextRef = useRef(null);
   useEffect(() => {
     const handleClickOutside = event => {
       if (
         profileMenuRef.current &&
         !profileMenuRef.current.contains(event.target) &&
-        !profileIconRef.current.contains(event.target)
+        !profileIconRef.current.contains(event.target) &&
+        !profileTextRef.current.contains(event.target)
       ) {
         setIsProfileOpen(false);
       }
@@ -199,14 +201,12 @@ const Nav = ({ nick }) => {
                   className="bi bi-person-circle"
                   onClick={openProfile}
                 ></ProfileIcon>
-                <Username onClick={openProfile}>
+                <Username onClick={openProfile} ref={profileTextRef}>
                   <b>{username}</b>
                 </Username>
                 {isProfileOpen && (
                   <ProfileMenu ref={profileMenuRef}>
-                    <UserProfile
-                      onClick={() => navigate(`/${username}/bookmarks`)}
-                    >
+                    <UserProfile onClick={() => navigate(`/bookmarks`)}>
                       북마크
                     </UserProfile>
                     <LogoutButton onClick={logout}>로그아웃</LogoutButton>
@@ -239,14 +239,12 @@ const Nav = ({ nick }) => {
                   className="bi bi-person-circle"
                   onClick={openProfile}
                 />
-                <Username onClick={openProfile}>
+                <Username onClick={openProfile} ref={profileTextRef}>
                   <b>{username}</b>
                 </Username>
                 {isProfileOpen && (
                   <MobileList ref={profileMenuRef}>
-                    <UserProfile
-                      onClick={() => navigate(`/${username}/bookmarks`)}
-                    >
+                    <UserProfile onClick={() => navigate(`/bookmarks`)}>
                       북마크
                     </UserProfile>
                     <MobileLogout onClick={logout}>로그아웃</MobileLogout>

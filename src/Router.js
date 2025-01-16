@@ -98,7 +98,7 @@ const Router = () => {
             element={<PageWrapper username={username} Component={NotFound} />}
           />
           <Route
-            path="/bookmarks/:subjectName"
+            path="/bookmarks"
             element={<PageWrapper Component={Bookmarks} />}
           />
           <Route
