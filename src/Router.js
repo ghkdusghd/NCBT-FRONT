@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import Main from "./pages/Main/Main";
 import Footer from "./components/Footer/Footer";
 import Nav from "./components/Nav/Nav";
@@ -65,7 +66,8 @@ const Router = () => {
         </Routes>
       ) : (
         <Routes>
-          <Route
+          <Route path="/" element={<Navigate to="/NCA/practice" replace />} />
+          {/* <Route
             path="/"
             element={
               <>
@@ -73,14 +75,14 @@ const Router = () => {
                 <Main />
               </>
             }
-          />
+          /> */}
           <Route path="/:name" element={<PageSwitch username={username} />} />
           <Route
             path="/:name/practice"
             element={<PageWrapper username={username} Component={Practice} />}
           />
           <Route
-            path="/:name/exam"
+            path="/:name/:exam"
             element={<PageWrapper username={username} Component={Exam} />}
           />
           <Route
@@ -137,7 +139,7 @@ const Router = () => {
           />
         </Routes>
       )}
-      <Footer />
+      {/* <Footer /> */}
     </BrowserRouter>
   );
 };

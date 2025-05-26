@@ -172,7 +172,7 @@ const Practice = () => {
       }
     } catch (err) {
       console.error("error occured:", err);
-      alert("로그인시 이용 가능합니다.");
+      alert("로그인 후 이용 가능합니다.");
     }
   };
 
@@ -193,7 +193,7 @@ const Practice = () => {
       <ProgressBarContainer>
         <Progress width={progressBar} />
       </ProgressBarContainer>
-      {currentIdx > 2 ? "" : <ControlExplain />}
+      <ControlExplain />
       <KeyboardController
         handleOptionChange={handleOptionChange}
         selectedOptions={selectedOptions}
@@ -207,9 +207,7 @@ const Practice = () => {
         handleBookmark={handleBookmark}
         isComplaintModal={isComplaintModal}
       />
-      {currentIdx > 2 && !token ? (
-        <NotFound />
-      ) : currentQuestion ? (
+      {currentQuestion ? (
         <>
           <ProblemBox key={currentIdx} data-aos={animation}>
             <BookmarkButton
@@ -332,32 +330,28 @@ const Practice = () => {
       ) : (
         <span>문제가 없습니다.</span>
       )}
-      {currentIdx > 2 && !token ? (
-        ""
-      ) : (
-        <ButtonContainer>
-          <PrevButton
-            onClick={() => {
-              handlePreviousQuestion();
-              document.activeElement.blur();
-            }}
-            disabled={currentIdx === 0}
-          >
-            이전 문제
-          </PrevButton>
-          <CurrentPage>
-            {currentIdx + 1} / {totalPage}
-          </CurrentPage>
-          <NextButton
-            onClick={() => {
-              handleNextQuestion();
-              document.activeElement.blur();
-            }}
-          >
-            다음 문제
-          </NextButton>
-        </ButtonContainer>
-      )}
+      <ButtonContainer>
+        <PrevButton
+          onClick={() => {
+            handlePreviousQuestion();
+            document.activeElement.blur();
+          }}
+          disabled={currentIdx === 0}
+        >
+          이전 문제
+        </PrevButton>
+        <CurrentPage>
+          {currentIdx + 1} / {totalPage}
+        </CurrentPage>
+        <NextButton
+          onClick={() => {
+            handleNextQuestion();
+            document.activeElement.blur();
+          }}
+        >
+          다음 문제
+        </NextButton>
+      </ButtonContainer>
       {isComplaintModal && (
         <ComplaintModal
           modalTitle="문제 오류 신고"
@@ -498,7 +492,7 @@ const ButtonContainer = styled.div`
 const PrevButton = styled.button`
   padding: 0.5rem 1rem;
   font-size: 1.2rem;
-  background-color: ${props => props.theme.mainColor2};
+  background-color: ${props => props.theme.mainColor};
   border: none;
   cursor: pointer;
 
@@ -568,7 +562,7 @@ const ExplanationText = styled.p`
 const ProgressBarContainer = styled.div`
   width: 100%;
   height: 0.3rem;
-  background-color: #e0e0e0;
+  background-color: white;
   position: fixed;
   top: 4rem;
   z-index: 1000;
@@ -577,6 +571,6 @@ const ProgressBarContainer = styled.div`
 const Progress = styled.div`
   height: 100%;
   width: ${props => props.width}%;
-  background-color: #4b9a8f;
+  background-color: #02c95f;
   transition: width 0.1s ease-in-out;
 `;

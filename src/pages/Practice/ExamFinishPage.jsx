@@ -34,9 +34,9 @@ const ExamFinishPage = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  if (!token) {
-    return <NotFound />;
-  }
+  // if (!token) {
+  //   return <NotFound />;
+  // }
 
   return (
     <>

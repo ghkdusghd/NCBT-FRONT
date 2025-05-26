@@ -45,12 +45,12 @@ const Exam = () => {
   }, [currentIndex]);
 
   // 로그인하지 않은 사용자는 NotFound 페이지로 보내고, 로그인한 사용자에게는 ExamWait 컴포넌트를 띄움.
-  const token = sessionStorage.getItem("accessToken");
-  useEffect(() => {
-    if (!token) {
-      navigate(`/${subjectName}/who-are-you`);
-    }
-  }, [token]);
+  // const token = sessionStorage.getItem("accessToken");
+  // useEffect(() => {
+  //   if (!token) {
+  //     navigate(`/${subjectName}/who-are-you`);
+  //   }
+  // }, [token]);
 
   // 사용자가 선택한 과목의 문제 60개 랜덤으로 가져오기
   useEffect(() => {
@@ -217,10 +217,8 @@ const Exam = () => {
     if (count >= 36) {
       navigate(`/${subjectName}/exam/finish`);
     } else {
-      alert(
-        `🥲 탈락입니다. 메인 화면으로 이동합니다. (정답 개수 : ${count} 개)`,
-      );
-      navigate(`/${subjectName}`);
+      alert(`🥲 탈락입니다. 연습문제로 이동합니다. (정답 개수 : ${count} 개)`);
+      navigate(`/${subjectName}/practice`);
     }
     recordScore();
   };
@@ -433,7 +431,7 @@ const ResponsiveContainer = styled.div``;
 const MainContainer = styled.div`
   margin: 6rem;
   display: grid;
-  grid-template-columns: 5fr 4fr 1fr;
+  grid-template-columns: 6fr 4fr;
 `;
 
 const ExamContainer = styled.div`

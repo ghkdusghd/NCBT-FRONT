@@ -16,7 +16,7 @@ const Nav = ({ nick }) => {
 
   const navigate = useNavigate();
 
-  const { name: subjectName } = useParams();
+  const { name: subjectName, exam } = useParams();
 
   const getAccessToken = () => {
     const token = sessionStorage.getItem("accessToken");
@@ -179,20 +179,51 @@ const Nav = ({ nick }) => {
   return (
     <NavBody>
       <NavLogo
-        src="/images/logo.png"
+        src="/images/NCBT_logo.png"
         alt="logo"
         onClick={() => navigate("/")}
       />
-      <SubjectTitle>{subjectName}</SubjectTitle>
       <ControllerBox>
-        {windowWidth > 720 && (
+        {windowWidth >= 768 && (
           <>
+            <SubjectTitle>
+              <NavTitle
+                isActive={subjectName === "NCA"}
+                onClick={() => navigate("/NCA/practice")}
+              >
+                NCA
+              </NavTitle>
+              <NavTitle
+                isActive={subjectName === "NCP200"}
+                onClick={() => navigate("/NCP200/practice")}
+              >
+                NCP200
+              </NavTitle>
+              <NavTitle
+                isActive={subjectName === "NCP202"}
+                onClick={() => navigate("/NCP202/practice")}
+              >
+                NCP202
+              </NavTitle>
+              <NavTitle
+                isActive={subjectName === "NCP207"}
+                onClick={() => navigate("/NCP207/practice")}
+              >
+                NCP207
+              </NavTitle>
+              <NavTitle
+                isActive={exam === "exam"}
+                onClick={() => navigate(`/${subjectName}/exam`)}
+              >
+                실전 모의고사
+              </NavTitle>
+            </SubjectTitle>
             {!isToken ? (
               <>
-                <Login onClick={() => openModal("login")}>로그인</Login>
-                <Register onClick={() => openModal("register")}>
+                <Login onClick={() => openModal("login")}>Log In</Login>
+                {/* <Register onClick={() => openModal("register")}>
                   회원가입
-                </Register>
+                </Register> */}
               </>
             ) : (
               <>
@@ -216,7 +247,7 @@ const Nav = ({ nick }) => {
             )}
           </>
         )}
-        {windowWidth <= 720 && (
+        {windowWidth < 768 && (
           <>
             {!isToken ? (
               <>
@@ -224,11 +255,11 @@ const Nav = ({ nick }) => {
                 {isListOpen && (
                   <MobileList>
                     <MobileLogin onClick={() => openModal("login")}>
-                      로그인
+                      Login
                     </MobileLogin>
-                    <MobileRegister onClick={() => openModal("register")}>
+                    {/* <MobileRegister onClick={() => openModal("register")}>
                       회원가입
-                    </MobileRegister>
+                    </MobileRegister> */}
                   </MobileList>
                 )}
               </>
@@ -271,7 +302,7 @@ export default Nav;
 const NavBody = styled.div`
   width: 100%;
   height: 4rem;
-  background-color: ${props => props.theme.mainColor};
+  background-color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -285,16 +316,18 @@ const NavBody = styled.div`
 const NavLogo = styled.img`
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: 0.4rem;
   opacity: 0.9;
   cursor: pointer;
 `;
 
-const SubjectTitle = styled.span`
+const SubjectTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
   font-size: 1.2rem;
   font-weight: 700;
-  color: white;
-  padding-left: 4rem;
+  color: #333333;
+  width: 80%;
+  margin: 0 10rem;
 
   @media (max-width: 720px) {
     padding-left: 0;
@@ -305,7 +338,8 @@ const ControllerBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: ${props => props.theme.white};
+  width: -webkit-fill-available;
+  color: #333333;
   gap: 1rem;
 `;
 
@@ -313,16 +347,21 @@ const Username = styled.span`
   cursor: pointer;
 
   &:hover {
-    text-decoration: underline;
+    text-decoration: underline red wavy 2px;
   }
 `;
 
-const Login = styled.span`
+const Login = styled.button`
   cursor: pointer;
-  font-weight: 700;
+  color: #333333;
+  background-color: white;
+  border: 1px solid #333333;
+
+  font-size: 1rem;
 
   &:hover {
-    text-decoration: underline;
+    color: #333333;
+    font-weight: bold;
   }
 
   @media (max-width: 720px) {
@@ -335,7 +374,7 @@ const Register = styled.span`
   font-weight: 700;
 
   &:hover {
-    text-decoration: underline;
+    text-decoration: underline red wavy 2px;
   }
 
   @media (max-width: 720px) {
@@ -408,7 +447,7 @@ const MobileLogin = styled.span`
   color: ${props => props.theme.white};
 
   &:hover {
-    text-decoration: underline;
+    text-decoration: underline red wavy 2px;
   }
 `;
 
@@ -418,7 +457,7 @@ const MobileRegister = styled.span`
   color: ${props => props.theme.white};
 
   &:hover {
-    text-decoration: underline;
+    text-decoration: underline red wavy 2px;
   }
 `;
 
@@ -428,7 +467,7 @@ const MobileLogout = styled.span`
   color: ${props => props.theme.white};
 
   &:hover {
-    text-decoration: underline;
+    text-decoration: underline red wavy 2px;
   }
 `;
 
@@ -438,6 +477,18 @@ const UserProfile = styled.div`
   cursor: pointer;
 
   &:hover {
-    text-decoration: underline;
+    text-decoration: underline red wavy 2px;
+  }
+`;
+
+// ver2
+
+const NavTitle = styled.div`
+  cursor: pointer;
+  color: ${({ isActive }) => (isActive ? "#02C95F" : "#333333")};
+  font-weight: ${({ isActive }) => (isActive ? "bold" : "normal")};
+
+  &:hover {
+    text-decoration: underline red wavy 2px;
   }
 `;

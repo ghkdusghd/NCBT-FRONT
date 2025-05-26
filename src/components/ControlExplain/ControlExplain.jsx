@@ -20,7 +20,7 @@ export default ControlExplain;
 const ControlBox = styled.div`
   width: 14%;
   padding: 1.4rem;
-  background-color: #ffa6004d;
+  background-color: #f5f5f5;
   position: absolute;
   top: 30%;
   left: 4%;

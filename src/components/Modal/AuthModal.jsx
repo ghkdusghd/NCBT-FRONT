@@ -297,10 +297,15 @@ const AuthModal = ({ type, closeModal }) => {
           X
         </span>
         {showLoginForm || type === "login" ? (
-          <form onSubmit={handleLogin}>
-            <LoginForm>
-              <h2 className="modal-title">로그인</h2>
-              <input
+          // <form onSubmit={handleLogin}>
+          <LoginForm>
+            <h2 className="modal-title">N-CBT에 로그인합니다.</h2>
+            <img
+              src="/images/NCBT_logo.png"
+              alt="logo"
+              style={{ width: "50%" }}
+            />
+            {/* <input
                 type="text"
                 name="username"
                 placeholder="닉네임(계정)"
@@ -332,21 +337,21 @@ const AuthModal = ({ type, closeModal }) => {
                   backgroundColor: "lightGray",
                   height: "1px",
                   border: "none",
-                }}
-              />
-              <GithubLogin type="button" onClick={() => doGitLogin()}>
-                <img src="/images/github.png" alt="github-icon" />
-                <span> GitHub Login</span>
-              </GithubLogin>
-              <NaverLogin type="button" onClick={() => doNaverLogin()}>
-                <span style={{ fontSize: "1.5rem", marginRight: "0.5rem" }}>
-                  N
-                </span>
-                <span> Naver Login</span>
-              </NaverLogin>
-            </LoginForm>
-          </form>
+                }} */}
+            {/* /> */}
+            <GithubLogin type="button" onClick={() => doGitLogin()}>
+              <img src="/images/github.png" alt="github-icon" />
+              <span> Sign In With GitHub</span>
+            </GithubLogin>
+            <NaverLogin type="button" onClick={() => doNaverLogin()}>
+              <span style={{ fontSize: "1.5rem", marginRight: "0.5rem" }}>
+                N
+              </span>
+              <span> Sign In With Naver</span>
+            </NaverLogin>
+          </LoginForm>
         ) : (
+          // </form>
           <form onSubmit={handleRegister}>
             <RegisterForm
               email={email}
@@ -546,6 +551,8 @@ const AuthModalContent = styled.div`
 const LoginForm = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  margin: 1rem;
   gap: 1rem;
 
   input {
