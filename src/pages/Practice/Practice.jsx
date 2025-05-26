@@ -11,6 +11,7 @@ import ComplaintModal from "../../components/Modal/ComplaintModal";
 import KeyboardController from "../../hooks/KeyboardController";
 import axiosConfig from "../../utils/axiosConfig";
 import WrongMark from "../../components/Marks/WrongMark";
+import RankTool from "../../components/ToolTip/RankTool";
 
 const Practice = () => {
   const param = useParams();
@@ -352,6 +353,7 @@ const Practice = () => {
           다음 문제
         </NextButton>
       </ButtonContainer>
+      <RankTool subjectProp={subjectName} />
       {isComplaintModal && (
         <ComplaintModal
           modalTitle="문제 오류 신고"

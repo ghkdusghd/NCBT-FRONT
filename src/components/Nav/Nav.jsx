@@ -57,35 +57,47 @@ const Nav = ({ nick }) => {
         const newAccessToken = response.headers.get("Authorization");
         if (newAccessToken) {
           const accessToken = newAccessToken.split(" ")[1];
-
           sessionStorage.setItem("accessToken", accessToken);
-          response.headers.get("Set-Cookie");
-
           setIsToken(true);
+          return true; // 성공 반환
+        } else {
+          // Authorization 헤더가 없는 경우
+          console.log("Authorization 헤더가 응답에 없습니다.");
+          setIsToken(false);
+          return false;
         }
       }
 
       if (response.status === 401) {
         setIsToken(false);
-        // alert("사용자 정보가 만료되었습니다. 다시 로그인 해주세요.");
-        // navigate("/");
+        return false;
       }
     } catch (error) {
       console.error("토큰 갱신 중 오류 발생", error);
       setIsToken(false);
-      // navigate("/");
+      return false;
     }
+  };
+
+  const getCookie = name => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+    return null;
   };
 
   // 로그인 유지를 위한 토큰 검증
   useEffect(() => {
     const token = getAccessToken();
+    const refreshToken = getCookie("refreshToken");
     const storedUsername = sessionStorage.getItem("username");
 
     if (token) {
       setIsToken(true);
-    } else if (!token && !nick) {
+    } else if (refreshToken) {
       handleUpdateToken();
+    } else {
+      setIsToken(false);
     }
 
     if (storedUsername) {
@@ -214,6 +226,11 @@ const Nav = ({ nick }) => {
     };
   }, [isListOpen]);
 
+  const handleNavigatePractice = name => {
+    navigate(`/${name}/practice`);
+    window.location.reload();
+  };
+
   return (
     <NavBody>
       <ControllerBox>
@@ -227,25 +244,25 @@ const Nav = ({ nick }) => {
             <SubjectTitle>
               <NavTitle
                 isActive={subjectName === "NCA"}
-                onClick={() => navigate("/NCA/practice")}
+                onClick={() => handleNavigatePractice("NCA")}
               >
                 NCA
               </NavTitle>
               <NavTitle
                 isActive={subjectName === "NCP200"}
-                onClick={() => navigate("/NCP200/practice")}
+                onClick={() => handleNavigatePractice("NCP200")}
               >
                 NCP200
               </NavTitle>
               <NavTitle
                 isActive={subjectName === "NCP202"}
-                onClick={() => navigate("/NCP202/practice")}
+                onClick={() => handleNavigatePractice("NCP202")}
               >
                 NCP202
               </NavTitle>
               <NavTitle
                 isActive={subjectName === "NCP207"}
-                onClick={() => navigate("/NCP207/practice")}
+                onClick={() => handleNavigatePractice("NCP207")}
               >
                 NCP207
               </NavTitle>

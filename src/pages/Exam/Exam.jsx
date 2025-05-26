@@ -217,8 +217,9 @@ const Exam = () => {
     if (count >= 36) {
       navigate(`/${subjectName}/exam/finish`);
     } else {
-      alert(`🥲 탈락입니다. 연습문제로 이동합니다. (정답 개수 : ${count} 개)`);
-      navigate(`/${subjectName}/practice`);
+      alert(`🥲 탈락입니다. (정답 개수 : ${count} 개)`);
+      navigate(`/${subjectName}/exam`);
+      window.location.reload();
     }
     recordScore();
   };

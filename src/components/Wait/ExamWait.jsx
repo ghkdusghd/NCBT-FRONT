@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import useResponsive from "../../hooks/useResponsive";
 import { useNavigate, useParams } from "react-router-dom";
+import RankTool from "../ToolTip/RankTool";
 
 const ExamWait = ({ onStart }) => {
   const [isAgreed, setIsAgreed] = useState(false);
@@ -16,6 +17,7 @@ const ExamWait = ({ onStart }) => {
   const handleNavigate = subject => {
     closeModal();
     navigate(`/${subject}/exam`);
+    window.location.reload();
   };
 
   const closeModal = () => {
@@ -140,6 +142,7 @@ const ExamWait = ({ onStart }) => {
               시험 시작
             </StyledButton>
           </ButtonBox>
+          <RankTool subjectProp={subjectName} />
         </MainContainer>
       )}
       {modal && (
