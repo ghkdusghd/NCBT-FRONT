@@ -176,16 +176,54 @@ const Nav = ({ nick }) => {
     };
   }, []);
 
+  // 모바일 내비게이션
+  const handleNavigate = subject => {
+    setIsListOpen(false);
+    navigate(`/${subject}/practice`);
+  };
+
+  const handleOpenModal = () => {
+    setIsListOpen(false);
+    openModal("login");
+  };
+
+  const handleExam = subject => {
+    setIsListOpen(false);
+    navigate(`/${subject}/exam`);
+  };
+
+  // MobileList 외부 클릭 시 닫기
+  const listRef = useRef(null); // MobileList 참조용
+  const logoRef = useRef(null); // NavLogo도 제외 대상
+
+  useEffect(() => {
+    const handleClickOutside = event => {
+      if (
+        isListOpen &&
+        listRef.current &&
+        !listRef.current.contains(event.target) &&
+        !logoRef.current?.contains(event.target)
+      ) {
+        setIsListOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isListOpen]);
+
   return (
     <NavBody>
-      <NavLogo
-        src="/images/NCBT_logo.png"
-        alt="logo"
-        onClick={() => navigate("/")}
-      />
       <ControllerBox>
         {windowWidth >= 768 && (
           <>
+            <NavLogo
+              src="/images/NCBT_logo.png"
+              alt="logo"
+              onClick={() => navigate("/")}
+            />
             <SubjectTitle>
               <NavTitle
                 isActive={subjectName === "NCA"}
@@ -251,11 +289,32 @@ const Nav = ({ nick }) => {
           <>
             {!isToken ? (
               <>
-                <ListIcon className="bi bi-list" onClick={openList} />
+                <NavLogo
+                  ref={logoRef}
+                  src="/images/NCBT_logo.png"
+                  alt="logo"
+                  onClick={openList}
+                />
+                {subjectName}
                 {isListOpen && (
-                  <MobileList>
-                    <MobileLogin onClick={() => openModal("login")}>
-                      Login
+                  <MobileList ref={listRef}>
+                    <MobileLogin onClick={() => handleOpenModal()}>
+                      로그인
+                    </MobileLogin>
+                    <MobileLogin onClick={() => handleNavigate("NCA")}>
+                      NCA
+                    </MobileLogin>
+                    <MobileLogin onClick={() => handleNavigate("NCP200")}>
+                      NCP200
+                    </MobileLogin>
+                    <MobileLogin onClick={() => handleNavigate("NCP202")}>
+                      NCP202
+                    </MobileLogin>
+                    <MobileLogin onClick={() => handleNavigate("NCP207")}>
+                      NCP207
+                    </MobileLogin>
+                    <MobileLogin onClick={() => handleExam(subjectName)}>
+                      실전 모의고사
                     </MobileLogin>
                     {/* <MobileRegister onClick={() => openModal("register")}>
                       회원가입
@@ -429,10 +488,10 @@ const LogoutButton = styled.span`
 
 const MobileList = styled.div`
   position: absolute;
-  top: 4.1rem;
-  right: 0.4rem;
-  background-color: ${props => props.theme.mainColor};
+  top: 4.3rem;
+  background-color: white;
   padding: 1rem;
+  border: 1px solid #333333;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
@@ -444,7 +503,7 @@ const MobileList = styled.div`
 const MobileLogin = styled.span`
   font-weight: 700;
   cursor: pointer;
-  color: ${props => props.theme.white};
+  color: #333333;
 
   &:hover {
     text-decoration: underline red wavy 2px;
