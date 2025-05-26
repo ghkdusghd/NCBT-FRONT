@@ -192,6 +192,7 @@ const Nav = ({ nick }) => {
   const handleNavigate = subject => {
     setIsListOpen(false);
     navigate(`/${subject}/practice`);
+    window.location.reload();
   };
 
   const handleOpenModal = () => {
