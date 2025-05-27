@@ -42,7 +42,7 @@ const RankTool = ({ subjectProp }) => {
                 const emoji = rankEmojis[index] || "🏅";
 
                 return (
-                  <Tooltip key={item.name}>
+                  <Tooltip key={index}>
                     {emoji} {index + 1}등 {item.nickname} ({item.score}점)
                   </Tooltip>
                 );

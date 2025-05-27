@@ -244,31 +244,31 @@ const Nav = ({ nick }) => {
             />
             <SubjectTitle>
               <NavTitle
-                isActive={subjectName === "NCA"}
+                $isActive={subjectName === "NCA"}
                 onClick={() => handleNavigatePractice("NCA")}
               >
                 NCA
               </NavTitle>
               <NavTitle
-                isActive={subjectName === "NCP200"}
+                $isActive={subjectName === "NCP200"}
                 onClick={() => handleNavigatePractice("NCP200")}
               >
                 NCP200
               </NavTitle>
               <NavTitle
-                isActive={subjectName === "NCP202"}
+                $isActive={subjectName === "NCP202"}
                 onClick={() => handleNavigatePractice("NCP202")}
               >
                 NCP202
               </NavTitle>
               <NavTitle
-                isActive={subjectName === "NCP207"}
+                $isActive={subjectName === "NCP207"}
                 onClick={() => handleNavigatePractice("NCP207")}
               >
                 NCP207
               </NavTitle>
               <NavTitle
-                isActive={exam === "exam"}
+                $isActive={exam === "exam"}
                 onClick={() => navigate(`/${subjectName}/exam`)}
               >
                 실전 모의고사
@@ -562,8 +562,8 @@ const UserProfile = styled.div`
 
 const NavTitle = styled.div`
   cursor: pointer;
-  color: ${({ isActive }) => (isActive ? "#02C95F" : "#333333")};
-  font-weight: ${({ isActive }) => (isActive ? "bold" : "normal")};
+  color: ${({ $isActive }) => ($isActive ? "#02C95F" : "#333333")};
+  font-weight: ${({ $isActive }) => ($isActive ? "bold" : "normal")};
 
   &:hover {
     text-decoration: underline red wavy 2px;
