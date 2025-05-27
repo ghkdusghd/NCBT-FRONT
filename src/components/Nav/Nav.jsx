@@ -18,13 +18,28 @@ const Nav = ({ nick }) => {
 
   const { name: subjectName, exam } = useParams();
 
+  // base64 디코딩 후 UTF-8로 복원하는 함수
+  function b64DecodeUnicode(str) {
+    return decodeURIComponent(
+      Array.prototype.map
+        .call(
+          atob(str),
+          c => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2),
+        )
+        .join(""),
+    );
+  }
+
   const getAccessToken = () => {
     const token = sessionStorage.getItem("accessToken");
     if (!token) return null;
 
     try {
-      const payload = JSON.parse(atob(token.split(".")[1]));
+      // atob → UTF-8 복원
+      const payloadStr = b64DecodeUnicode(token.split(".")[1]);
+      const payload = JSON.parse(payloadStr);
       const exp = payload.exp * 1000;
+      sessionStorage.setItem("username", payload.sub);
       const currentTime = new Date().getTime();
 
       if (currentTime > exp) {
@@ -90,7 +105,6 @@ const Nav = ({ nick }) => {
   useEffect(() => {
     const token = getAccessToken();
     const refreshToken = getCookie("refreshToken");
-    const storedUsername = sessionStorage.getItem("username");
 
     if (token) {
       setIsToken(true);
@@ -98,10 +112,6 @@ const Nav = ({ nick }) => {
       handleUpdateToken();
     } else {
       setIsToken(false);
-    }
-
-    if (storedUsername) {
-      setUsername(storedUsername);
     }
   }, []);
 
@@ -283,14 +293,11 @@ const Nav = ({ nick }) => {
               </>
             ) : (
               <>
-                <ProfileIcon
-                  ref={profileIconRef}
-                  className="bi bi-person-circle"
-                  onClick={openProfile}
-                ></ProfileIcon>
-                <Username onClick={openProfile} ref={profileTextRef}>
-                  <b>{username}</b>
-                </Username>
+                <Login ref={profileIconRef} onClick={openProfile}>
+                  <Username onClick={openProfile} ref={profileTextRef}>
+                    <b onClick={openProfile}>{username}</b>
+                  </Username>
+                </Login>
                 {isProfileOpen && (
                   <ProfileMenu ref={profileMenuRef}>
                     <UserProfile onClick={() => navigate(`/bookmarks`)}>
@@ -305,58 +312,55 @@ const Nav = ({ nick }) => {
         )}
         {windowWidth < 768 && (
           <>
-            {!isToken ? (
-              <>
-                <NavLogo
-                  ref={logoRef}
-                  src="/images/NCBT_logo.png"
-                  alt="logo"
-                  onClick={openList}
-                />
-                {subjectName}
-                {isListOpen && (
-                  <MobileList ref={listRef}>
-                    <MobileLogin onClick={() => handleOpenModal()}>
-                      로그인
-                    </MobileLogin>
-                    <MobileLogin onClick={() => handleNavigate("NCA")}>
-                      NCA
-                    </MobileLogin>
-                    <MobileLogin onClick={() => handleNavigate("NCP200")}>
-                      NCP200
-                    </MobileLogin>
-                    <MobileLogin onClick={() => handleNavigate("NCP202")}>
-                      NCP202
-                    </MobileLogin>
-                    <MobileLogin onClick={() => handleNavigate("NCP207")}>
-                      NCP207
-                    </MobileLogin>
-                    <MobileLogin onClick={() => handleExam(subjectName)}>
-                      실전 모의고사
-                    </MobileLogin>
-                    {/* <MobileRegister onClick={() => openModal("register")}>
+            <>
+              <NavLogo
+                ref={logoRef}
+                src="/images/NCBT_logo.png"
+                alt="logo"
+                onClick={openList}
+              />
+              {isListOpen && (
+                <MobileList ref={listRef}>
+                  <MobileLogin onClick={() => handleNavigate("NCA")}>
+                    NCA
+                  </MobileLogin>
+                  <MobileLogin onClick={() => handleNavigate("NCP200")}>
+                    NCP200
+                  </MobileLogin>
+                  <MobileLogin onClick={() => handleNavigate("NCP202")}>
+                    NCP202
+                  </MobileLogin>
+                  <MobileLogin onClick={() => handleNavigate("NCP207")}>
+                    NCP207
+                  </MobileLogin>
+                  <MobileLogin onClick={() => handleExam(subjectName)}>
+                    실전 모의고사
+                  </MobileLogin>
+                  {/* <MobileRegister onClick={() => openModal("register")}>
                       회원가입
                     </MobileRegister> */}
-                  </MobileList>
-                )}
+                </MobileList>
+              )}
+            </>
+            {!isToken ? (
+              <>
+                <MobileDiv>{subjectName}</MobileDiv>
               </>
             ) : (
               <>
-                <ProfileIcon
-                  ref={profileIconRef}
-                  className="bi bi-person-circle"
-                  onClick={openProfile}
-                />
-                <Username onClick={openProfile} ref={profileTextRef}>
-                  <b>{username}</b>
-                </Username>
+                <MobileDiv>{subjectName}</MobileDiv>
+                <MobileLogin ref={profileIconRef} onClick={openProfile}>
+                  <Username onClick={openProfile} ref={profileTextRef}>
+                    <b onClick={openProfile}>{username}</b>
+                  </Username>
+                </MobileLogin>
                 {isProfileOpen && (
-                  <MobileList ref={profileMenuRef}>
+                  <MobileUserList ref={profileMenuRef}>
                     <UserProfile onClick={() => navigate(`/bookmarks`)}>
                       북마크
                     </UserProfile>
-                    <MobileLogout onClick={logout}>로그아웃</MobileLogout>
-                  </MobileList>
+                    <UserProfile onClick={logout}>로그아웃</UserProfile>
+                  </MobileUserList>
                 )}
               </>
             )}
@@ -482,10 +486,11 @@ const ListIcon = styled.i`
 
 const ProfileMenu = styled.div`
   position: absolute;
-  top: 4.1rem;
-  right: 1rem;
-  background-color: ${props => props.theme.mainColor};
+  top: 4.3rem;
+  right: 2.3rem;
+  background-color: white;
   padding: 1rem;
+  border: 1px solid #333333;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
@@ -497,10 +502,10 @@ const ProfileMenu = styled.div`
 const LogoutButton = styled.span`
   font-weight: 700;
   cursor: pointer;
-  color: ${props => props.theme.white};
+  color: #333333;
 
   &:hover {
-    text-decoration: underline;
+    text-decoration: underline red wavy 2px;
   }
 `;
 
@@ -550,7 +555,7 @@ const MobileLogout = styled.span`
 
 const UserProfile = styled.div`
   font-weight: 700;
-  color: ${props => props.theme.white};
+  color: #333333;
   cursor: pointer;
 
   &:hover {
@@ -568,4 +573,21 @@ const NavTitle = styled.div`
   &:hover {
     text-decoration: underline red wavy 2px;
   }
+`;
+
+const MobileDiv = styled.div``;
+
+const MobileUserList = styled.div`
+  position: absolute;
+  top: 4.3rem;
+  right: 1rem;
+  background-color: white;
+  padding: 1rem;
+  border: 1px solid #333333;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 1rem;
+  z-index: 9999;
 `;
