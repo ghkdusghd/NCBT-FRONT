@@ -69,44 +69,81 @@ const Bookmarks = () => {
 
   return (
     <>
-      {/* {isDesktop && ( */}
-      <DesktopContainer>
-        <DesktopBookmark>
-          <h2 className="bookmark-title-list">북마크한 문제</h2>
-          {subjects.map(el => (
-            <button
-              className="subject-btn"
-              key={el}
-              onClick={() => handleSubjectClick(el)}
-            >
-              {el}
-            </button>
-          ))}
-        </DesktopBookmark>
-        <DesktopDescriptions>
-          {questionData.map((el, idx) => (
-            <DesktopQuestions key={el.id}>
-              <h3>
-                {idx + 1}. {el.question}
-              </h3>
-              <ul className="exmale-box">
-                {el.example.map((example, idx) => (
-                  <li key={example.num}>
-                    {idx + 1}.&nbsp;{example.text}
-                  </li>
-                ))}
-              </ul>
-              <p>
-                <strong>정답:</strong> {el.answer}
-              </p>
-              <p>
-                <strong>설명:</strong> {el.explanation}
-              </p>
-            </DesktopQuestions>
-          ))}
-        </DesktopDescriptions>
-      </DesktopContainer>
-      {/* )} */}
+      {isMobile && (
+        <MobileContainer>
+          <MobileBookmark>
+            {subjects.map(el => (
+              <MarkButton
+                className="subject-btn"
+                key={el}
+                onClick={() => handleSubjectClick(el)}
+              >
+                {el}
+              </MarkButton>
+            ))}
+          </MobileBookmark>
+          <MobileDescriptions>
+            {questionData.map((el, idx) => (
+              <MobileQuestions key={el.id}>
+                <h3>
+                  {idx + 1}. {el.question}
+                </h3>
+                <ul className="exmale-box">
+                  {el.example.map((example, idx) => (
+                    <li key={example.num}>
+                      {idx + 1}.&nbsp;{example.text}
+                    </li>
+                  ))}
+                </ul>
+                <p>
+                  <strong>정답:</strong> {el.answer}
+                </p>
+                <p>
+                  <strong>설명:</strong> {el.explanation}
+                </p>
+              </MobileQuestions>
+            ))}
+          </MobileDescriptions>
+        </MobileContainer>
+      )}
+      {isDesktop && (
+        <DesktopContainer>
+          <DesktopBookmark>
+            <h2 className="bookmark-title-list">북마크한 문제</h2>
+            {subjects.map(el => (
+              <MarkButton
+                className="subject-btn"
+                key={el}
+                onClick={() => handleSubjectClick(el)}
+              >
+                {el}
+              </MarkButton>
+            ))}
+          </DesktopBookmark>
+          <DesktopDescriptions>
+            {questionData.map((el, idx) => (
+              <DesktopQuestions key={el.id}>
+                <h3>
+                  {idx + 1}. {el.question}
+                </h3>
+                <ul className="exmale-box">
+                  {el.example.map((example, idx) => (
+                    <li key={example.num}>
+                      {idx + 1}.&nbsp;{example.text}
+                    </li>
+                  ))}
+                </ul>
+                <p>
+                  <strong>정답:</strong> {el.answer}
+                </p>
+                <p>
+                  <strong>설명:</strong> {el.explanation}
+                </p>
+              </DesktopQuestions>
+            ))}
+          </DesktopDescriptions>
+        </DesktopContainer>
+      )}
     </>
   );
 };
@@ -161,5 +198,41 @@ const DesktopDescriptions = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+// ver2
+
+const MarkButton = styled.button`
+  font-size: x-small;
+  width: auto;
+  margin: 0 0.3rem;
+  background-color: white;
+  color: #333333;
+  border: 1px solid #333333;
+  border-radius: 4px;
+
+  &:hover {
+    color: #333333;
+  }
+`;
+
+const MobileContainer = styled.div`
+  margin: 5rem 0;
+  display: grid;
+  grid-template-rows: 1fr 9fr;
+  justify-items: center;
+  padding: 2rem;
+  gap: 1rem;
+`;
+
+const MobileDescriptions = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const MobileQuestions = styled.div`
+  margin: 0.5rem 0;
+`;
+
+const MobileBookmark = styled.div``;
 
 export default Bookmarks;

@@ -31,16 +31,6 @@ const Callback = () => {
       },
     );
 
-    if (response.status === 400) {
-      navigate(-1);
-      alert("사용자 정보가 없습니다. 로그인을 다시 시도해주세요.");
-    }
-
-    if (response.status === 401) {
-      navigate(-1);
-      alert("이미 등록된 이메일입니다. 일반 로그인을 이용해주세요.");
-    }
-
     if (response.status === 200) {
       // accessToken을 세션 스토리지에 저장 (추후 변경 가능성 있음)
       const data = await response.headers.get("Authorization");
@@ -70,11 +60,6 @@ const Callback = () => {
       },
     );
 
-    if (response.status === 400 || 401) {
-      navigate(-1);
-      alert("사용자 정보가 없습니다. 로그인을 다시 시도해주세요.");
-    }
-
     if (response.status === 200) {
       // accessToken을 세션 스토리지에 저장 (추후 변경 가능성 있음)
       const data = await response.headers.get("Authorization");
@@ -83,8 +68,8 @@ const Callback = () => {
       // 쿠키도 추가해야해 !!!!!
       response.headers.get("Set-Cookie");
 
-      navigate(-1);
-      // window.location.reload();
+      navigate("/");
+      window.location.reload();
     } else {
       console.error("Failed to fetch token");
     }

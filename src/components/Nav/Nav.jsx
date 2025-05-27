@@ -215,6 +215,11 @@ const Nav = ({ nick }) => {
     navigate(`/${subject}/exam`);
   };
 
+  const handleBookmark = () => {
+    setIsProfileOpen(false);
+    navigate(`/bookmarks`);
+  };
+
   // MobileList 외부 클릭 시 닫기
   const listRef = useRef(null); // MobileList 참조용
   const logoRef = useRef(null); // NavLogo도 제외 대상
@@ -300,7 +305,7 @@ const Nav = ({ nick }) => {
                 </Login>
                 {isProfileOpen && (
                   <ProfileMenu ref={profileMenuRef}>
-                    <UserProfile onClick={() => navigate(`/bookmarks`)}>
+                    <UserProfile onClick={() => handleBookmark()}>
                       북마크
                     </UserProfile>
                     <LogoutButton onClick={logout}>로그아웃</LogoutButton>
@@ -321,6 +326,11 @@ const Nav = ({ nick }) => {
               />
               {isListOpen && (
                 <MobileList ref={listRef}>
+                  {!isToken && (
+                    <MobileLogin onClick={() => openModal("login")}>
+                      로그인
+                    </MobileLogin>
+                  )}
                   <MobileLogin onClick={() => handleNavigate("NCA")}>
                     NCA
                   </MobileLogin>
@@ -356,7 +366,7 @@ const Nav = ({ nick }) => {
                 </MobileLogin>
                 {isProfileOpen && (
                   <MobileUserList ref={profileMenuRef}>
-                    <UserProfile onClick={() => navigate(`/bookmarks`)}>
+                    <UserProfile onClick={() => handleBookmark()}>
                       북마크
                     </UserProfile>
                     <UserProfile onClick={logout}>로그아웃</UserProfile>
