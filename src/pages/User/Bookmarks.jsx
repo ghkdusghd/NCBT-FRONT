@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 const Bookmarks = () => {
   const subjects = ["NCA", "NCP200", "NCP202", "NCP207"];
-  const [selectedSubject, setSelectedSubject] = useState();
+  const [selectedSubject, setSelectedSubject] = useState("NCP202");
   const [bookmarkList, setBookmarkList] = useState([]);
   const [questionData, setQuestionData] = useState([]);
   const navigate = useNavigate();
@@ -23,15 +23,23 @@ const Bookmarks = () => {
 
   const getBookmarks = async () => {
     try {
-      const response = await axiosConfig.get(`/bookmarks/${selectedSubject}`);
+      const response = await axiosConfig.get(
+        `/v2/bookmarks/${selectedSubject}`,
+      );
+
       if (response.status === 204) {
-        alert("북마크한 문제가 없습니다");
+        alert("북마크한 문제가 없습니다.");
+        return;
+      }
+
+      if (response.status === 400) {
+        alert("사용자 정보가 없습니다.");
         return;
       }
 
       if (response.status === 200 && response.data) {
-        setBookmarkList(response.data);
-        loadQuestionData(response.data);
+        setBookmarkList(response.data.data);
+        loadQuestionData(response.data.data);
       }
     } catch (err) {
       console.error(err);
@@ -51,7 +59,9 @@ const Bookmarks = () => {
       const module = await response.json();
 
       const filteredQuestions = module.filter(question =>
-        bookmarks.some(bookmark => bookmark.questionId === question.id),
+        bookmarks.some(
+          bookmark => Number(bookmark.questionId) === Number(question.id),
+        ),
       );
 
       setQuestionData(filteredQuestions);

@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import axiosConfig from "../../utils/axiosConfig";
 
 const ComplaintModal = ({
@@ -8,6 +7,7 @@ const ComplaintModal = ({
   isComplaint,
   setIsComplaint,
   subjectId,
+  subjectTitle,
   questionId,
 }) => {
   const [complaint, setComplaint] = useState({
@@ -28,14 +28,14 @@ const ComplaintModal = ({
   const handleComplaintReport = async () => {
     try {
       const PracticeComplaintsDTO = {
-        subjectId: subjectId,
+        subjectTitle: subjectTitle,
         subjectQuestionId: questionId,
         title: complaint.title,
         content: complaint.content,
       };
 
       const res = await axiosConfig.post(
-        "/practice-complaints",
+        "/v2/practice-complaints",
         PracticeComplaintsDTO,
       );
 
@@ -45,7 +45,7 @@ const ComplaintModal = ({
       }
     } catch (err) {
       if (err.response && err.response.status === 400) {
-        const message = err.response.data;
+        const message = err.response.data.message;
         setIsComplaint(!isComplaint);
 
         if (message === "이미 해당 문제에 대한 오류 신고가 접수되었습니다.") {
@@ -56,9 +56,9 @@ const ComplaintModal = ({
           alert("문제 접수 실패: " + message);
         }
       } else {
-        alert("로그인시 이용 가능합니다.");
+        alert("로그인 후 이용 가능합니다.");
         setIsComplaint(!isComplaint);
-        console.error("error occured: ", err);
+        // console.error("error occured: ", err);
       }
     }
   };

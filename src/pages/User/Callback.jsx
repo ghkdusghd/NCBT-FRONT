@@ -20,7 +20,7 @@ const Callback = () => {
 
   const handleNaverLogin = async (code, state) => {
     const response = await fetch(
-      `${process.env.REACT_APP_BASE_URL}/login/naver`,
+      `${process.env.REACT_APP_BASE_URL}/v2/login/naver`,
       {
         method: "POST",
         headers: {
@@ -49,7 +49,7 @@ const Callback = () => {
   // 깃허브 로그인 핸들러
   const handleGithubLogin = async code => {
     const response = await fetch(
-      `${process.env.REACT_APP_BASE_URL}/login/github`,
+      `${process.env.REACT_APP_BASE_URL}/v2/login/github`,
       {
         method: "POST",
         headers: {

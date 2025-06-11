@@ -116,10 +116,15 @@ const Practice = () => {
   };
 
   const handleModal = () => {
-    if (isComplaintModal === false) {
-      setIsComplaintModal(true);
-    } else if (isComplaintModal === true) {
-      setIsComplaintModal(false);
+    if (!token) {
+      alert("로그인 후 이용 가능합니다.");
+      return;
+    } else {
+      if (isComplaintModal === false) {
+        setIsComplaintModal(true);
+      } else if (isComplaintModal === true) {
+        setIsComplaintModal(false);
+      }
     }
   };
 
@@ -128,7 +133,7 @@ const Practice = () => {
       try {
         if (!questionId) return;
 
-        const res = await axiosConfig.get("/bookmarks", {
+        const res = await axiosConfig.get("/v2/bookmarks", {
           params: { questionId },
         });
 
@@ -155,23 +160,26 @@ const Practice = () => {
   }, [questionId]);
 
   const handleBookmark = async () => {
+    setIsBookmarked(prev => !prev);
     try {
       const bookmarkDTO = {
-        subjectId: subjectId,
+        subject: subjectName,
         questionId: questionId,
       };
+      console.log(subjectName);
+      const res = await axiosConfig.post("/v2/bookmarks", bookmarkDTO);
 
-      const res = await axiosConfig.post("/bookmarks", bookmarkDTO);
-
-      if (res.status === 200) {
-        const message = res.data;
-        if (message.includes("삭제")) {
-          setIsBookmarked(false);
-        } else if (message.includes("추가")) {
-          setIsBookmarked(true);
-        }
-      }
+      // if (res.status === 200) {
+      //   const message = res.data.message;
+      //   if (message.includes("삭제")) {
+      //     setIsBookmarked(false);
+      //   } else if (message.includes("추가")) {
+      //     setIsBookmarked(true);
+      //   }
+      // }
     } catch (err) {
+      // 실패 시 되돌리기
+      setIsBookmarked(prev => !prev);
       console.error("error occured:", err);
       alert("로그인 후 이용 가능합니다.");
     }
@@ -361,6 +369,7 @@ const Practice = () => {
           setIsComplaint={setIsComplaintModal}
           isComplaint={isComplaintModal}
           subjectId={subjectId}
+          subjectTitle={subjectName}
           questionId={questionId}
         />
       )}

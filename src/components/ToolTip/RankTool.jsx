@@ -15,14 +15,14 @@ const RankTool = ({ subjectProp }) => {
 
   const getRankingData = async () => {
     const response = await axios
-      .post(`${process.env.REACT_APP_BASE_URL}/ranking/v2`, {
+      .post(`${process.env.REACT_APP_BASE_URL}/v2/ranking`, {
         title: subjectName,
       })
       .catch(err => {
         console.log(err);
       });
 
-    setRankingData(response.data);
+    setRankingData(response.data.data);
   };
 
   // 반응형
